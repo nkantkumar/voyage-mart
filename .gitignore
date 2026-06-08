@@ -1,0 +1,18 @@
+# Bazel convenience symlinks
+/bazel-*
+
+# Java compiled JARs copied to service contexts
+booking-service/booking-service.jar
+cruise-service/cruise-service.jar
+payment-service/payment-service.jar
+
+# IDE specific files
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.DS_Store
+
+# Logs
+*.log

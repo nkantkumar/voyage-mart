@@ -1,0 +1,11 @@
+package(default_visibility = ["//visibility:public"])
+
+java_library(
+    name = "shared",
+    srcs = glob(["src/main/java/**/*.java"]),
+    deps = [
+        "@maven//:io_temporal_temporal_sdk",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+    ],
+)

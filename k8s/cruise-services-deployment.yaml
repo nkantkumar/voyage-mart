@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cruise-services
+  namespace: default
+  labels:
+    app: cruise-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cruise-services
+  template:
+    metadata:
+      labels:
+        app: cruise-services
+    spec:
+      containers:
+        - name: booking-service
+          image: gcr.io/your-gcp-project/booking-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          env:
+            - name: TEMPORAL_ADDRESS
+              value: "temporal-frontend.default.svc.cluster.local:7233"
+            - name: SERVER_PORT
+              value: "8081"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
+        - name: cruise-service
+          image: gcr.io/your-gcp-project/cruise-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082
+          env:
+            - name: TEMPORAL_ADDRESS
+              value: "temporal-frontend.default.svc.cluster.local:7233"
+            - name: SERVER_PORT
+              value: "8082"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
+        - name: payment-service
+          image: gcr.io/your-gcp-project/payment-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8083
+          env:
+            - name: TEMPORAL_ADDRESS
+              value: "temporal-frontend.default.svc.cluster.local:7233"
+            - name: SERVER_PORT
+              value: "8083"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-service
+  namespace: default
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8081
+  selector:
+    app: cruise-services
+  type: LoadBalancer
