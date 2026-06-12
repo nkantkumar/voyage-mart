@@ -163,10 +163,10 @@ For deployment on Google Kubernetes Engine (GKE), the services run in a single *
     ```
 
 2.  **Configure Manifests**:
-    Open [k8s/cruise-services-deployment.yaml](file:///Users/nishi/Documents/GitHub/voyage-mart/k8s/cruise-services-deployment.yaml) and replace `gcr.io/your-gcp-project/` with your actual GCP Project path.
+    Open [k8s/voyage-journey-deployment.yaml](file:///Users/nishi/Documents/GitHub/voyage-mart/k8s/voyage-journey-deployment.yaml) and replace `gcr.io/your-gcp-project/` with your actual GCP Project path.
 
 3.  **Apply manifests to the cluster**:
     ```bash
-    kubectl apply -f k8s/cruise-services-deployment.yaml
+    kubectl apply -f k8s/voyage-journey-deployment.yaml
     ```
     This launches all three services inside a single Pod sharing the same `localhost` context and exposes the Booking Service REST endpoint via a LoadBalancer on port 80.

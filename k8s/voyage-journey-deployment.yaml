@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cruise-services
+  name: voyage-journey
   namespace: default
   labels:
-    app: cruise-services
+    app: voyage-journey
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: cruise-services
+      app: voyage-journey
   template:
     metadata:
       labels:
-        app: cruise-services
+        app: voyage-journey
     spec:
       containers:
         - name: booking-service
@@ -81,5 +81,5 @@ spec:
       port: 80
       targetPort: 8081
   selector:
-    app: cruise-services
+    app: voyage-journey
   type: LoadBalancer
