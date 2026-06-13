@@ -35,36 +35,14 @@ services:
     depends_on:
       - temporal
 
-  booking-service:
+  voyage-services:
     build:
-      context: ./booking-service
+      context: ./unified
       dockerfile: Dockerfile
-    container_name: booking-service
+    container_name: voyage-services
     ports:
       - "8081:8081"
-    environment:
-      - TEMPORAL_ADDRESS=temporal:7233
-    depends_on:
-      - temporal
-
-  cruise-service:
-    build:
-      context: ./cruise-service
-      dockerfile: Dockerfile
-    container_name: cruise-service
-    ports:
       - "8082:8082"
-    environment:
-      - TEMPORAL_ADDRESS=temporal:7233
-    depends_on:
-      - temporal
-
-  payment-service:
-    build:
-      context: ./payment-service
-      dockerfile: Dockerfile
-    container_name: payment-service
-    ports:
       - "8083:8083"
     environment:
       - TEMPORAL_ADDRESS=temporal:7233

@@ -6,9 +6,10 @@ bazel build //booking-service:booking-service //cruise-service:cruise-service //
 
 echo "=== Copying JARs to Docker build contexts ==="
 rm -f booking-service/booking-service.jar cruise-service/cruise-service.jar payment-service/payment-service.jar
-cp bazel-bin/booking-service/booking-service.jar booking-service/
-cp bazel-bin/cruise-service/cruise-service.jar cruise-service/
-cp bazel-bin/payment-service/payment-service.jar payment-service/
+rm -f unified/*.jar
+cp bazel-bin/booking-service/booking-service.jar unified/
+cp bazel-bin/cruise-service/cruise-service.jar unified/
+cp bazel-bin/payment-service/payment-service.jar unified/
 
 echo "=== Starting Docker Compose ==="
 docker-compose up --build
