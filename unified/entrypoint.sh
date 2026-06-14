@@ -3,15 +3,15 @@
 echo "Starting all services..."
 
 # Start booking-service
-java -jar /app/booking-service.jar &
+java -cp "/app/booking.jar:/app/shared.jar:/app/common/lib/*" com.voyage.booking.BookingApplication &
 booking_pid=$!
 
 # Start cruise-service
-java -jar /app/cruise-service.jar &
+java -cp "/app/cruise.jar:/app/shared.jar:/app/common/lib/*" com.voyage.cruise.CruiseApplication &
 cruise_pid=$!
 
 # Start payment-service
-java -jar /app/payment-service.jar &
+java -cp "/app/payment.jar:/app/shared.jar:/app/common/lib/*" com.voyage.payment.PaymentApplication &
 payment_pid=$!
 
 cleanup() {
