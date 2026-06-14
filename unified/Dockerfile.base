@@ -1,0 +1,25 @@
+# Stage 1: Extractor
+FROM eclipse-temurin:21-jre-alpine AS builder
+WORKDIR /extract
+
+# Install unzip to extract the fat JARs
+RUN apk add --no-cache unzip
+
+COPY booking-service.jar booking.jar
+COPY cruise-service.jar cruise.jar
+COPY payment-service.jar payment.jar
+
+RUN unzip -q booking.jar -d booking
+RUN unzip -q cruise.jar -d cruise
+RUN unzip -q payment.jar -d payment
+
+# Create a single flat directory containing all dependencies recursively collected
+RUN mkdir -p common/lib && \
+    find booking/BOOT-INF/lib/ -name "*.jar" -exec cp -n {} common/lib/ \; && \
+    find cruise/BOOT-INF/lib/ -name "*.jar" -exec cp -n {} common/lib/ \; && \
+    find payment/BOOT-INF/lib/ -name "*.jar" -exec cp -n {} common/lib/ \;
+
+# Stage 2: Base Image
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=builder /extract/common/lib/ ./common/lib/
